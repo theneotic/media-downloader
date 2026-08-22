@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/_core/hooks/useAuth";
+import { startLogin } from "@/const";
 import { trpc } from "@/lib/trpc";
 import {
   Apple,
@@ -124,6 +126,19 @@ export default function Home() {
     nextStep: string;
     urlRecognized: boolean;
   } | null>(null);
+  const [lastJob, setLastJob] = useState<{
+    id: string;
+    status: string;
+    createdAt: Date;
+    scope: string;
+    mode: string;
+    outputUrl?: string | null;
+  } | null>(null);
+  const { isAuthenticated, loading: authLoading } = useAuth();
+  const jobsQuery = trpc.media.jobs.list.useQuery(undefined, {
+    enabled: isAuthenticated,
+    refetchInterval: 5000,
+  });
 
   const selected = useMemo(
     () => sourceOptions.find((option) => option.id === source) ?? sourceOptions[0],
@@ -136,11 +151,45 @@ export default function Home() {
     },
     onError: (error) => toast.error(error.message),
   });
+  const jobMutation = trpc.media.jobs.createYouTube.useMutation({
+    onSuccess: (job) => {
+      setLastJob(job);
+      setLastResult({
+        title: "Authorized YouTube job queued",
+        message: "The job specification is stored and ready for a configured media worker to claim.",
+        nextStep: "Keep this page open to follow the worker-reported status once a worker is connected.",
+        urlRecognized: true,
+      });
+      toast.success("Authorized YouTube job queued.");
+    },
+    onError: (error) => toast.error(error.message),
+  });
+  const activeJob = useMemo(() => {
+    if (!lastJob) return null;
+    return jobsQuery.data?.find((job) => job.id === lastJob.id) ?? lastJob;
+  }, [jobsQuery.data, lastJob]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!url.trim()) {
       toast.error("Paste a service URL to continue.");
+      return;
+    }
+    if (source === "youtube") {
+      if (!isAuthenticated) {
+        toast.message("Sign in to save an authorized YouTube job.");
+        startLogin();
+        return;
+      }
+      jobMutation.mutate({
+        url: url.trim(),
+        mode,
+        scope: scope as "video" | "playlist" | "channel",
+        quality: quality as "best" | "1080" | "720" | "480" | "360",
+        outputTemplate: template,
+        workers,
+        retries,
+      });
       return;
     }
     inspectMutation.mutate({ source, url: url.trim() });
@@ -149,6 +198,7 @@ export default function Home() {
   const resetWorkspace = () => {
     setUrl("");
     setLastResult(null);
+    setLastJob(null);
     toast.message("Workspace reset.");
   };
 
@@ -167,10 +217,14 @@ export default function Home() {
             <h1 className="text-lg font-extrabold tracking-tight">Media Catch</h1>
           </div>
         </div>
-        <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs text-muted-foreground sm:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#55e38c] shadow-[0_0_10px_#55e38c]" />
-          CONTROL ROOM READY
-        </div>
+        {isAuthenticated ? (
+          <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs text-muted-foreground sm:flex">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#55e38c] shadow-[0_0_10px_#55e38c]" />
+            CONTROL ROOM READY
+          </div>
+        ) : (
+          <Button type="button" onClick={() => startLogin()} disabled={authLoading} variant="outline" className="rounded-full border-white/15 bg-white/[0.035] text-xs hover:bg-white/[0.08]">Sign in to queue jobs</Button>
+        )}
       </header>
 
       <main className="relative z-10 mx-auto max-w-7xl px-5 pb-16 lg:px-8">
@@ -328,9 +382,9 @@ export default function Home() {
 
             <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-2 text-xs text-muted-foreground"><Gauge className="h-4 w-4 text-primary" />{source === "youtube" ? `${scope} · ${mode === "audio" ? "MP3" : quality} · ${workers} workers · ${retries} retries` : "Catalog metadata + official playback link"}</div>
-              <Button type="submit" size="lg" disabled={inspectMutation.isPending} className="rounded-xl bg-primary px-5 font-bold text-primary-foreground shadow-[0_12px_30px_rgba(255,188,71,0.18)] hover:bg-primary/90">
-                {inspectMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />}
-                {source === "youtube" ? "Prepare workflow" : "Inspect link"}
+              <Button type="submit" size="lg" disabled={inspectMutation.isPending || jobMutation.isPending} className="rounded-xl bg-primary px-5 font-bold text-primary-foreground shadow-[0_12px_30px_rgba(255,188,71,0.18)] hover:bg-primary/90">
+                {inspectMutation.isPending || jobMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />}
+                {source === "youtube" ? (isAuthenticated ? "Queue authorized job" : "Sign in to queue") : "Inspect link"}
               </Button>
             </div>
           </form>
@@ -338,6 +392,17 @@ export default function Home() {
           <aside className="flex flex-col gap-4">
             <div className="rounded-3xl border border-white/10 bg-card/65 p-5">
               <p className="font-mono-ui text-[10px] tracking-[0.16em] text-primary">WORKFLOW STATUS</p>
+              {activeJob && (
+                <div className="mt-5 rounded-2xl border border-primary/25 bg-primary/[0.08] p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="font-mono-ui text-[10px] tracking-[0.14em] text-primary">JOB {activeJob.id.slice(0, 8)}</span>
+                    <span className="rounded-full bg-primary px-2 py-1 font-mono-ui text-[9px] font-semibold tracking-[0.12em] text-primary-foreground">{activeJob.status.toUpperCase()}</span>
+                  </div>
+                  <p className="mt-3 text-sm font-bold">{activeJob.scope} · {activeJob.mode}</p>
+                  <p className="mt-1 text-xs leading-5 text-muted-foreground">Created at {new Date(activeJob.createdAt).toLocaleTimeString()}. Status refreshes every five seconds while you are signed in.</p>
+                  {activeJob.outputUrl && <a href={activeJob.outputUrl} className="mt-3 inline-flex text-xs font-bold text-primary underline underline-offset-4">Open completed file</a>}
+                </div>
+              )}
               {lastResult ? (
                 <div className="mt-5">
                   <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono-ui text-[10px] tracking-[0.1em] ${lastResult.urlRecognized ? "bg-[#55e38c]/15 text-[#8af1b0]" : "bg-primary/15 text-primary"}`}>

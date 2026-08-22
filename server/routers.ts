@@ -1,8 +1,17 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import { inspectSourceUrl } from "./media/inspect";
+import {
+  claimNextMediaJob,
+  createYouTubeJob,
+  listUserMediaJobs,
+  workerUpdateSchema,
+  updateMediaJobFromWorker,
+  youtubeJobInputSchema,
+} from "./media/jobs";
+import { assertWorkerSecret } from "./media/workerAuth";
 import { z } from "zod";
 
 const mediaSourceSchema = z.enum(["youtube", "spotify", "appleMusic"]);
@@ -30,6 +39,32 @@ export const appRouter = router({
         }),
       )
       .mutation(({ input }) => inspectSourceUrl(input.source, input.url)),
+    worker: router({
+      verify: publicProcedure
+        .input(z.object({ workerSecret: z.string().min(1) }))
+        .mutation(({ input }) => {
+          assertWorkerSecret(input.workerSecret);
+          return { authenticated: true } as const;
+        }),
+      claim: publicProcedure
+        .input(z.object({ workerSecret: z.string().min(1), workerReference: z.string().min(3).max(64) }))
+        .mutation(async ({ input }) => {
+          assertWorkerSecret(input.workerSecret);
+          return claimNextMediaJob(input.workerReference);
+        }),
+      update: publicProcedure
+        .input(z.object({ workerSecret: z.string().min(1), update: workerUpdateSchema }))
+        .mutation(async ({ input }) => {
+          assertWorkerSecret(input.workerSecret);
+          return updateMediaJobFromWorker(input.update);
+        }),
+    }),
+    jobs: router({
+      createYouTube: protectedProcedure.input(youtubeJobInputSchema).mutation(({ ctx, input }) => {
+        return createYouTubeJob(ctx.user.id, input);
+      }),
+      list: protectedProcedure.query(({ ctx }) => listUserMediaJobs(ctx.user.id)),
+    }),
   }),
 
   // TODO: add feature routers here, e.g.

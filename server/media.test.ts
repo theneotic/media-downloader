@@ -41,4 +41,34 @@ describe("media.inspect", () => {
 
     expect(result.urlRecognized).toBe(false);
   });
+
+  it("rejects malformed URLs and invalid source values", async () => {
+    await expect(
+      caller.media.inspect({
+        source: "youtube",
+        url: "this is not a URL",
+      }),
+    ).rejects.toThrow();
+
+    await expect(
+      caller.media.inspect({
+        source: "soundcloud" as "youtube",
+        url: "https://soundcloud.com/example",
+      }),
+    ).rejects.toThrow();
+  });
+});
+
+describe("media.worker.verify", () => {
+  it("accepts the configured worker secret and rejects an incorrect secret", async () => {
+    const workerSecret = process.env.WORKER_SHARED_SECRET;
+    expect(workerSecret).toBeTruthy();
+
+    await expect(caller.media.worker.verify({ workerSecret: workerSecret! })).resolves.toEqual({
+      authenticated: true,
+    });
+    await expect(caller.media.worker.verify({ workerSecret: "incorrect-secret" })).rejects.toThrow(
+      "Worker authentication failed.",
+    );
+  });
 });

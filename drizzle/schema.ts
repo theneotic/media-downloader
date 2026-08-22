@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -25,4 +25,52 @@ export const users = mysqlTable("users", {
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
-// TODO: Add your tables here
+export const mediaJobs = mysqlTable(
+  "media_jobs",
+  {
+    id: varchar("id", { length: 32 }).primaryKey(),
+    userId: int("user_id").notNull(),
+    source: mysqlEnum("source", ["youtube"]).notNull().default("youtube"),
+    url: text("url").notNull(),
+    mode: mysqlEnum("mode", ["video", "audio"]).notNull(),
+    scope: mysqlEnum("scope", ["video", "playlist", "channel"]).notNull(),
+    quality: varchar("quality", { length: 16 }).notNull(),
+    outputTemplate: text("output_template").notNull(),
+    workers: int("workers").notNull(),
+    retries: int("retries").notNull(),
+    status: mysqlEnum("status", ["queued", "assigned", "running", "succeeded", "failed", "cancelled"])
+      .notNull()
+      .default("queued"),
+    outputUrl: text("output_url"),
+    failureReason: text("failure_reason"),
+    workerReference: varchar("worker_reference", { length: 64 }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+    startedAt: timestamp("started_at"),
+    completedAt: timestamp("completed_at"),
+  },
+  (table) => [
+    index("media_jobs_user_created_idx").on(table.userId, table.createdAt),
+    index("media_jobs_status_created_idx").on(table.status, table.createdAt),
+  ],
+);
+
+export type MediaJob = typeof mediaJobs.$inferSelect;
+export type InsertMediaJob = typeof mediaJobs.$inferInsert;
+
+export const mediaJobFiles = mysqlTable(
+  "media_job_files",
+  {
+    id: varchar("id", { length: 32 }).primaryKey(),
+    jobId: varchar("job_id", { length: 32 }).notNull(),
+    storageKey: varchar("storage_key", { length: 512 }).notNull(),
+    downloadUrl: text("download_url").notNull(),
+    filename: varchar("filename", { length: 512 }).notNull(),
+    mimeType: varchar("mime_type", { length: 128 }).notNull(),
+    bytes: int("bytes").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [index("media_job_files_job_created_idx").on(table.jobId, table.createdAt)],
+);
+
+export type MediaJobFile = typeof mediaJobFiles.$inferSelect;

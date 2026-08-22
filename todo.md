@@ -7,8 +7,15 @@
 - [x] Present YouTube workflow controls for playlist, audio, naming, worker, and retry configuration.
 - [x] Implement lawful Spotify and Apple Music URL-inspection interfaces without protected-stream extraction.
 - [ ] Add a production-authorized YouTube media worker with durable storage delivery.
+- [x] Add a production-authorized YouTube media worker with durable storage delivery.
 - [ ] Implement typed YouTube job submission from the website to a configured backend worker.
+- [x] Implement typed YouTube job submission from the website to a configured backend worker.
+- [ ] Define an authenticated worker callback contract without exposing worker credentials to the browser.
+- [x] Define an authenticated worker callback contract without exposing worker credentials to the browser.
+- [x] Persist submitted YouTube job specifications and status transitions.
+- [x] Connect the YouTube form to job creation and surface its queued state in the interface.
 - [x] Separate YouTube, Spotify, and Apple Music workflow logic into source-specific server modules.
 - [x] Add unit tests for recognized source selection.
-- [ ] Add unit tests for malformed URLs and invalid source inputs.
-- [ ] Create and push the completed project to a new private GitHub repository.
+- [x] Add unit tests for malformed URLs and invalid source inputs.
+- [x] Create and push the completed project to a new private GitHub repository.
+- [ ] Push the final worker-ready website update to the private GitHub repository.
