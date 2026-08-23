@@ -19,9 +19,16 @@
 - [x] Add unit tests for malformed URLs and invalid source inputs.
 - [x] Create and push the completed project to a new private GitHub repository.
 - [x] Push the final worker-ready website update to the private GitHub repository.
-- [ ] Review hosting integration requirements and deployment environment variables.
+- [ ] Set the required Vercel production environment variables for authenticated job and worker flows.
 - [x] Review hosting integration requirements and deployment environment variables.
 - [x] Finalize the application configuration and run deployment validation checks.
-- [ ] Create a new private GitHub repository and push the completed application.
+- [x] Create a new private GitHub repository and push the completed application.
 - [ ] Connect the new GitHub repository to Vercel and create a production deployment.
+- [ ] Complete Vercel GitHub authorization through the user's desktop session if needed.
 - [ ] Verify the published Vercel deployment and share the live URL.
+- [ ] Verify Background Removex branding on the deployed Vercel site.
+- [x] Rename the product branding and deployment metadata to Background Removex.
+- [x] Rename the product branding and deployment metadata to Background Removex.
+- [ ] Push the Background Removex branding commit to the renamed GitHub repository.
+- [x] Rename the user-owned GitHub repository to background-removex and update its remote.
+- [ ] Rename or recreate the Vercel project with the Background Removex identity.

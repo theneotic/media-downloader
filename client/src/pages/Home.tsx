@@ -214,7 +214,7 @@ export default function Home() {
           </div>
           <div>
             <p className="font-mono-ui text-[10px] tracking-[0.22em] text-primary">MEDIA UTILITY</p>
-            <h1 className="text-lg font-extrabold tracking-tight">Media Catch</h1>
+            <h1 className="text-lg font-extrabold tracking-tight">Background Removex</h1>
           </div>
         </div>
         {isAuthenticated ? (
