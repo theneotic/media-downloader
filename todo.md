@@ -42,7 +42,9 @@
 - [x] Rename or recreate the Vercel project with the Background Removex identity.
 - [x] Obtain the user's explicit preferred Git commit name and verified commit email.
 - [x] Rebuild the local commit history after confirming the user's email and remove non-user-authored refs from the replacement history.
-- [ ] Delete the current Background Removex repository at the user's request.
-- [ ] Create and push a replacement private Background Removex repository under the user's account.
-- [ ] Verify GitHub displays the replacement commits under the user's identity.
-- [ ] Reconnect the Vercel project to the replacement GitHub repository and redeploy.
+- [x] Delete the current Background Removex repository at the user's request.
+- [x] Create and push a replacement private Background Removex repository under the user's account.
+- [x] Verify GitHub displays the replacement commits under the user's identity.
+- [x] Reconnect the Vercel project to the replacement GitHub repository and redeploy.
+- [ ] Trigger a fresh Vercel deployment from the replacement repository's user-authored main branch.
+- [ ] Verify the fresh deployment source and live production site.
