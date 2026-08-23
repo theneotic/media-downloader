@@ -74,3 +74,18 @@ export const mediaJobFiles = mysqlTable(
 );
 
 export type MediaJobFile = typeof mediaJobFiles.$inferSelect;
+
+export const contactMessages = mysqlTable(
+  "contact_messages",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    name: varchar("name", { length: 120 }).notNull(),
+    email: varchar("email", { length: 320 }).notNull(),
+    subject: varchar("subject", { length: 160 }).notNull(),
+    message: text("message").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [index("contact_messages_email_created_idx").on(table.email, table.createdAt)],
+);
+
+export type ContactMessage = typeof contactMessages.$inferSelect;

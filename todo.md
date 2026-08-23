@@ -48,3 +48,11 @@
 - [x] Reconnect the Vercel project to the replacement GitHub repository and redeploy.
 - [x] Trigger a fresh Vercel deployment from the replacement repository's user-authored main branch.
 - [x] Verify the fresh deployment source and live production site.
+- [x] Add a site header with clear branding and primary navigation.
+- [x] Add About, Contact, Privacy, and Terms routes with accessible navigation.
+- [x] Add an in-context search affordance and a support-focused footer with copyright information.
+- [x] Add automated coverage and responsive visual verification for the public-site structure.
+- [x] Add automated tests for the shared public navigation and footer link structure.
+- [x] Add automated tests for public-page search results and route content metadata.
+- [x] Add automated tests for public-page route content definitions and expected headings.
+- [x] Add rendered component tests for the public About, Contact, Privacy, Terms, and Search routes.

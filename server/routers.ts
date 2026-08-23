@@ -12,6 +12,7 @@ import {
   youtubeJobInputSchema,
 } from "./media/jobs";
 import { assertWorkerSecret } from "./media/workerAuth";
+import { contactMessageSchema, createContactMessage } from "./site/contact";
 import { z } from "zod";
 
 const mediaSourceSchema = z.enum(["youtube", "spotify", "appleMusic"]);
@@ -65,6 +66,10 @@ export const appRouter = router({
       }),
       list: protectedProcedure.query(({ ctx }) => listUserMediaJobs(ctx.user.id)),
     }),
+  }),
+
+  site: router({
+    contact: publicProcedure.input(contactMessageSchema).mutation(({ input }) => createContactMessage(input)),
   }),
 
   // TODO: add feature routers here, e.g.

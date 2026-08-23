@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { startLogin } from "@/const";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 import { trpc } from "@/lib/trpc";
 import {
   Apple,
@@ -16,7 +18,6 @@ import {
   Play,
   RotateCcw,
   ShieldCheck,
-  Sparkles,
   TerminalSquare,
   Youtube,
 } from "lucide-react";
@@ -207,27 +208,9 @@ export default function Home() {
       <div className="pointer-events-none fixed inset-0 grid-noise opacity-60" />
       <div className="pointer-events-none fixed left-1/2 top-0 h-96 w-[760px] -translate-x-1/2 rounded-full bg-[#4a49ff]/15 blur-[120px]" />
 
-      <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-6 lg:px-8">
-        <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary text-primary-foreground shadow-[0_0_28px_rgba(255,188,71,0.27)]">
-            <Sparkles className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="font-mono-ui text-[10px] tracking-[0.22em] text-primary">MEDIA UTILITY</p>
-            <h1 className="text-lg font-extrabold tracking-tight">Background Removex</h1>
-          </div>
-        </div>
-        {isAuthenticated ? (
-          <div className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs text-muted-foreground sm:flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#55e38c] shadow-[0_0_10px_#55e38c]" />
-            CONTROL ROOM READY
-          </div>
-        ) : (
-          <Button type="button" onClick={() => startLogin()} disabled={authLoading} variant="outline" className="rounded-full border-white/15 bg-white/[0.035] text-xs hover:bg-white/[0.08]">Sign in to queue jobs</Button>
-        )}
-      </header>
+      <SiteHeader />
 
-      <main className="relative z-10 mx-auto max-w-7xl px-5 pb-16 lg:px-8">
+      <main id="workspace" className="relative z-10 mx-auto max-w-7xl px-5 pb-16 pt-10 lg:px-8">
         <section className="grid gap-8 border-b border-white/10 pb-8 lg:grid-cols-[1fr_330px] lg:items-end">
           <div>
             <p className="font-mono-ui text-xs tracking-[0.2em] text-primary">ONE URL. ONE CLEAR WORKFLOW.</p>
@@ -431,6 +414,7 @@ export default function Home() {
           </aside>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }
