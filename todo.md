@@ -46,5 +46,5 @@
 - [x] Create and push a replacement private Background Removex repository under the user's account.
 - [x] Verify GitHub displays the replacement commits under the user's identity.
 - [x] Reconnect the Vercel project to the replacement GitHub repository and redeploy.
-- [ ] Trigger a fresh Vercel deployment from the replacement repository's user-authored main branch.
-- [ ] Verify the fresh deployment source and live production site.
+- [x] Trigger a fresh Vercel deployment from the replacement repository's user-authored main branch.
+- [x] Verify the fresh deployment source and live production site.
