@@ -6,11 +6,11 @@
 - [x] Build a website source selector with clear capability and authorization messaging for each service.
 - [x] Present YouTube workflow controls for playlist, audio, naming, worker, and retry configuration.
 - [x] Implement lawful Spotify and Apple Music URL-inspection interfaces without protected-stream extraction.
-- [ ] Deploy the authorized YouTube worker to a user-provisioned Linux host and verify a live end-to-end job.
+- [x] Defer deployment of the authorized YouTube worker at the user's request.
 - [x] Add a production-authorized YouTube media worker with durable storage delivery.
-- [ ] Configure a deployed worker with the generated shared secret and the website URL.
+- [x] Defer deployed worker secret and API URL configuration at the user's request.
 - [x] Implement typed YouTube job submission from the website to a configured backend worker.
-- [ ] Verify the deployed worker can claim, upload, and complete a live authorized YouTube job.
+- [x] Defer live worker claim, upload, and completion verification at the user's request.
 - [x] Define an authenticated worker callback contract without exposing worker credentials to the browser.
 - [x] Persist submitted YouTube job specifications and status transitions.
 - [x] Connect the YouTube form to job creation and surface its queued state in the interface.
@@ -19,16 +19,24 @@
 - [x] Add unit tests for malformed URLs and invalid source inputs.
 - [x] Create and push the completed project to a new private GitHub repository.
 - [x] Push the final worker-ready website update to the private GitHub repository.
-- [ ] Set the required Vercel production environment variables for authenticated job and worker flows.
+- [x] Defer Vercel worker environment variables at the user's request.
+- [x] Defer always-on runtime inspection at the user's request.
+- [x] Defer authorized Background Removex worker startup at the user's request.
+- [x] Defer desktop connection and bound-folder verification at the user's request.
+- [x] Defer worker runtime installation on the desktop at the user's request.
+- [x] Defer desktop worker endpoint configuration at the user's request.
+- [x] Defer permitted end-to-end YouTube job verification at the user's request.
+- [x] Defer always-on worker synchronization to GitHub and Vercel at the user's request.
 - [x] Review hosting integration requirements and deployment environment variables.
 - [x] Finalize the application configuration and run deployment validation checks.
 - [x] Create a new private GitHub repository and push the completed application.
-- [ ] Connect the new GitHub repository to Vercel and create a production deployment.
-- [ ] Complete Vercel GitHub authorization through the user's desktop session if needed.
-- [ ] Verify the published Vercel deployment and share the live URL.
-- [ ] Verify Background Removex branding on the deployed Vercel site.
+- [x] Connect the new GitHub repository to Vercel and create a production deployment.
+- [x] Complete Vercel GitHub authorization through the user's desktop session if needed.
+- [x] Use the user's local browser session to complete the Background Removex Vercel import.
+- [x] Verify the published Vercel deployment and share the live URL.
+- [x] Verify Background Removex branding on the deployed Vercel site.
 - [x] Rename the product branding and deployment metadata to Background Removex.
 - [x] Rename the product branding and deployment metadata to Background Removex.
-- [ ] Push the Background Removex branding commit to the renamed GitHub repository.
+- [x] Push the Background Removex branding commit to the renamed GitHub repository.
 - [x] Rename the user-owned GitHub repository to background-removex and update its remote.
-- [ ] Rename or recreate the Vercel project with the Background Removex identity.
+- [x] Rename or recreate the Vercel project with the Background Removex identity.
