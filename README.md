@@ -1,6 +1,6 @@
-# Background Removex
+# Media Downloader
 
-Background Removex is a unified web workspace for routing music and video URLs through the workflow each service actually supports. It provides a single source selector with **three separate server modules**:
+Media Downloader is a unified web workspace for routing music and video URLs through the workflow each service actually supports. It provides a single source selector with **three separate server modules**:
 
 | Source | Module | Supported workflow |
 |---|---|---|
@@ -8,7 +8,7 @@ Background Removex is a unified web workspace for routing music and video URLs t
 | Spotify | `server/media/spotify.ts` | Inspect public URLs for catalog metadata and official playback-link workflows. |
 | Apple Music | `server/media/appleMusic.ts` | Inspect public URLs for catalog metadata and official playback-link workflows. |
 
-> Background Removex does not implement DRM circumvention, credential harvesting, or protected-stream extraction. Spotify and Apple Music integrations are intentionally scoped to official catalog metadata and playback links.
+> Media Downloader does not implement DRM circumvention, credential harvesting, or protected-stream extraction. Spotify and Apple Music integrations are intentionally scoped to official catalog metadata and playback links.
 
 ## Local development
 

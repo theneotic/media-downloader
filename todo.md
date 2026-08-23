@@ -21,7 +21,6 @@
 - [x] Push the final worker-ready website update to the private GitHub repository.
 - [x] Defer Vercel worker environment variables at the user's request.
 - [x] Defer always-on runtime inspection at the user's request.
-- [x] Defer authorized Background Removex worker startup at the user's request.
 - [x] Defer desktop connection and bound-folder verification at the user's request.
 - [x] Defer worker runtime installation on the desktop at the user's request.
 - [x] Defer desktop worker endpoint configuration at the user's request.
@@ -32,27 +31,5 @@
 - [x] Create a new private GitHub repository and push the completed application.
 - [x] Connect the new GitHub repository to Vercel and create a production deployment.
 - [x] Complete Vercel GitHub authorization through the user's desktop session if needed.
-- [x] Use the user's local browser session to complete the Background Removex Vercel import.
-- [x] Verify the published Vercel deployment and share the live URL.
-- [x] Verify Background Removex branding on the deployed Vercel site.
-- [x] Rename the product branding and deployment metadata to Background Removex.
-- [x] Rename the product branding and deployment metadata to Background Removex.
-- [x] Push the Background Removex branding commit to the renamed GitHub repository.
-- [x] Rename the user-owned GitHub repository to background-removex and update its remote.
-- [x] Rename or recreate the Vercel project with the Background Removex identity.
-- [x] Obtain the user's explicit preferred Git commit name and verified commit email.
-- [x] Rebuild the local commit history after confirming the user's email and remove non-user-authored refs from the replacement history.
-- [x] Delete the current Background Removex repository at the user's request.
-- [x] Create and push a replacement private Background Removex repository under the user's account.
-- [x] Verify GitHub displays the replacement commits under the user's identity.
-- [x] Reconnect the Vercel project to the replacement GitHub repository and redeploy.
-- [x] Trigger a fresh Vercel deployment from the replacement repository's user-authored main branch.
-- [x] Verify the fresh deployment source and live production site.
-- [x] Add a site header with clear branding and primary navigation.
-- [x] Add About, Contact, Privacy, and Terms routes with accessible navigation.
-- [x] Add an in-context search affordance and a support-focused footer with copyright information.
-- [x] Add automated coverage and responsive visual verification for the public-site structure.
-- [x] Add automated tests for the shared public navigation and footer link structure.
-- [x] Add automated tests for public-page search results and route content metadata.
-- [x] Add automated tests for public-page route content definitions and expected headings.
-- [x] Add rendered component tests for the public About, Contact, Privacy, Terms, and Search routes.
+- [x] Remove Background Removex-specific files, names, documentation, and deployment configuration while preserving the media-downloader workflow.
+- [ ] Verify the cleanup and publish it under the user's verified GitHub identity.
