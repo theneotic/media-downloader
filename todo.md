@@ -40,8 +40,8 @@
 - [x] Push the Background Removex branding commit to the renamed GitHub repository.
 - [x] Rename the user-owned GitHub repository to background-removex and update its remote.
 - [x] Rename or recreate the Vercel project with the Background Removex identity.
-- [ ] Obtain the user's explicit preferred Git commit name and verified commit email.
-- [ ] Rebuild the local commit history after confirming the user's email and remove non-user-authored refs from the replacement history.
+- [x] Obtain the user's explicit preferred Git commit name and verified commit email.
+- [x] Rebuild the local commit history after confirming the user's email and remove non-user-authored refs from the replacement history.
 - [ ] Delete the current Background Removex repository at the user's request.
 - [ ] Create and push a replacement private Background Removex repository under the user's account.
 - [ ] Verify GitHub displays the replacement commits under the user's identity.
