@@ -1,5 +1,24 @@
 # Media Downloader
 
+> **A unified web workspace that routes music and video URLs through the workflow each supported service requires.**
+
+| Project lens | Details |
+| --- | --- |
+| **Type** | Web application |
+| **Stack** | TypeScript · React · Vite |
+| **Status** | Actively maintained |
+
+## Overview
+
+A unified web workspace that routes music and video URLs through the workflow each supported service requires. This README keeps the project’s verified setup, usage, privacy, and implementation notes together in one place.
+
+## Repository Snapshot
+
+The top-level workspace currently includes `README.md`, `api/`, `client/`, `components.json`, `docs/`, `drizzle/`, `drizzle.config.ts`, `package.json`, `patches/`, `pnpm-lock.yaml`, `server/`, `shared/`. Review the project-specific sections below before installing dependencies, supplying configuration values, or running a build.
+
+
+---
+
 Media Downloader is a unified web workspace for routing music and video URLs through the workflow each service actually supports. It provides a single source selector with **three separate server modules**:
 
 | Source | Module | Supported workflow |
